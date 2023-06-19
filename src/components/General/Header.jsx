@@ -34,7 +34,6 @@ const Header = () => {
                         </Col>
                         <Col md={6}>
                             <Nav className="me-auto">
-                                <Nav.Link href="/">Главная</Nav.Link>
                                 <Nav.Link href="/line">Лента</Nav.Link>
                             </Nav>
                         </Col>

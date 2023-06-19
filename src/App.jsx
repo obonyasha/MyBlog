@@ -47,7 +47,7 @@ const App = () => {
                     setServerPost(data)
                 })
         }
-    }, [token])
+    }, [token, groupId])
 
     useEffect(() => {
         setPosts(serverPost)

@@ -1,5 +1,5 @@
-/* .card__text {
-    -webkit-line-clamp: 4; 
-    display: -webkit-box; 
-    -webkit-box-orient: vertical;
-} */
+.card__header {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    padding: 1rem;
+}
