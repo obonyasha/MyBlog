@@ -16,6 +16,19 @@ a {
   text-decoration: none !important;
 }
 
-#root{
-background-color: #79af9382;
+#root {
+  background-color: #79af9382;
+}
+
+.bloge__text_img img {
+  max-width: 100%;
+  height: 25%;
+}
+
+.bloge__text_img a {
+  text-align: start  !important;
+}
+
+.header {
+  width: 100%;
 }

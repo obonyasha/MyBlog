@@ -35,8 +35,8 @@ class Api {
             .then(res => res.json())
             .then(data => console.log(data))
     }
-    getProfile() {
-        return fetch(`${this.path}/products/users/me`, {
+    getProfile(userId) {
+        return fetch(`${this.path}/users/${userId}`, {
             headers: this.setHeaders()
         })
             .then(res => res.json())

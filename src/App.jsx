@@ -9,6 +9,8 @@ import ModalAuth from "./components/Modal";
 import Main from "./pages/Main";
 import Line from "./pages/Line";
 import Post from "./pages/Post";
+import Profile from "./pages/Profile";
+import AddPost from "./pages/AddPost";
 
 const App = () => {
     const [user, setUser] = useState(localStorage.getItem("blogUser"));
@@ -19,6 +21,10 @@ const App = () => {
     const [api, setApi] = useState(new Api(token));
     const [serverPost, setServerPost] = useState([]);
     const [posts, setPosts] = useState([]);
+    const [modalEditProfile, setModalEditProfile] = useState(false);
+    const [profile, setProfile] = useState({});
+    const [modalEditPost, setModalEditPost] = useState(false);
+
 
     useEffect(() => {
         setApi(new Api(token))
@@ -43,7 +49,7 @@ const App = () => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data);
+                    //console.log(data);
                     setServerPost(data)
                 })
         }
@@ -64,13 +70,22 @@ const App = () => {
             api,
             groupId,
             setGroupId,
-            posts           
+            posts,
+            setServerPost,
+            modalEditProfile,
+            setModalEditProfile,
+            profile,
+            setProfile,
+            modalEditPost, 
+            setModalEditPost
         }}>
             <Header />
             <Routes>
                 <Route path="/" element={<Main />} />
                 <Route path="/line" element={<Line />} />
                 <Route path="/post/:id" element={<Post />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/addpost" element={<AddPost />} />
             </Routes>
             <ModalAuth />
         </Ctx.Provider>

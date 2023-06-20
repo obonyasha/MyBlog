@@ -1,13 +1,12 @@
 import { useContext } from "react";
-import { Col, Row, Navbar, Container, Nav, Button } from "react-bootstrap";
-import { BoxArrowInLeft, BoxArrowInRight } from "react-bootstrap-icons";
-import { Link, useNavigate } from "react-router-dom";
+import { Col, Row, Navbar, Container, Nav, Button, Image } from "react-bootstrap";
+import { BoxArrowInRight, PlusCircle } from "react-bootstrap-icons";
+// import { Link, useNavigate } from "react-router-dom";
 import Logo from "./Logo";
 import Ctx from "../../context";
 
 const Header = () => {
-    const { user, userId, setModalActive, setUser } = useContext(Ctx);
-    const navigate = useNavigate();
+    const { user, setModalActive, profile } = useContext(Ctx);
 
     const logIn = (e) => {
         e.preventDefault();
@@ -15,41 +14,44 @@ const Header = () => {
         setModalActive(true);
     }
 
-    const logOut = (e) => {
-        e.preventDefault();
-        setUser("");
-        localStorage.removeItem("blogUser");
-        localStorage.removeItem("blogToken");
-        localStorage.removeItem("userBlogID");
-        localStorage.removeItem("groupId");
-    }
 
     return (
         <>
-            <Navbar bg="light" variant="light">
-                <Container>
+            <Navbar bg="light" variant="light" className="sticky-md-top">
+                <Container className="header">
                     <Row>
                         <Col md={2}>
                             <Logo />
                         </Col>
-                        <Col md={6}>
+                        <Col md={4}>
                             <Nav className="me-auto">
                                 <Nav.Link href="/line">Лента</Nav.Link>
                             </Nav>
                         </Col>
-                        <Col md={2}>
-                            {!user && <Button variant="light"
-                                onClick={logIn} title="Войти"
-                            >
-                                <BoxArrowInRight />
-                            </Button>}
+                        <Col md={2} >
+                            <Nav className="me-auto h-100 w-100">
+                                <Nav.Link href="/addpost" title="Создать пост">
+                                    <PlusCircle className="h-100 w-100" />
+                                </Nav.Link>
+                            </Nav>
                         </Col>
-                        <Col md={2}>
-                            {user && <Button variant="light"
-                                onClick={logOut} title="Выйти"
-                            >
-                                <BoxArrowInLeft />
-                            </Button>}
+                        <Col md={4}>
+                            {!user ?
+                                <Nav>
+                                    <Nav.Link href="/profile" title="Профиль">
+                                        <Button variant="light"
+                                            onClick={logIn} title="Войти"
+                                        >
+                                            <BoxArrowInRight />
+                                        </Button>                             </Nav.Link>
+                                </Nav>
+                                :
+                                <Nav>
+                                    <Nav.Link to="/profile" title="Профиль">
+                                        <Image src={profile.avatar} height="50" rounded />
+                                    </Nav.Link>
+                                </Nav>
+                            }
                         </Col>
                     </Row>
                 </Container>
