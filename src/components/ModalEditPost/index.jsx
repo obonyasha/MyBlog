@@ -5,22 +5,15 @@ import { Container, Form, Row, Col, Button, Modal } from "react-bootstrap";
 
 import Ctx from "../../context";
 
-const ModalEditPost = () => {
+const ModalEditPost = ({ titlePost, imagePost, textPost, tagsPost, id }) => {
     const { groupId, token, setServerPost, modalEditPost, setModalEditPost } = useContext(Ctx);
     const navigate = useNavigate();
-    const [title, setTitle] = useState("");
-    const [image, setImage] = useState("");
-    const [text, setText] = useState("");
+    const [title, setTitle] = useState(titlePost);
+    const [image, setImage] = useState(imagePost);
+    const [text, setText] = useState(textPost);
     const [tag, setTag] = useState("");
-    const [tags, setTags] = useState([]);
+    const [tags, setTags] = useState(tagsPost);
 
-
-    const clearForm = () => {
-        setTitle("");
-        setImage("");
-        setText("");
-        setTags([])
-    }
 
     const updTag = (val) => {
         const text = val.toLocaleLowerCase();
@@ -37,7 +30,7 @@ const ModalEditPost = () => {
         setTags(prev => prev.filter(tg => tg !== tag))
     }
 
-    const addPost = (e) => {
+    const editPost = (e) => {
         e.preventDefault();
         const body = {
             title,
@@ -45,8 +38,8 @@ const ModalEditPost = () => {
             text,
             tags
         }
-        fetch(`https://api.react-learning.ru/v2/${groupId}/posts`, {
-            method: "POST",
+        fetch(`https://api.react-learning.ru/v2/${groupId}/posts/${id}`, {
+            method: "PATCH",
             headers: {
                 "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
@@ -57,7 +50,7 @@ const ModalEditPost = () => {
             .then(data => {
                 console.log(data);
                 setServerPost(prev => [data, ...prev]);
-                clearForm();
+                setModalEditPost(false)
                 navigate(`/post/${data._id}`)
             })
     }
@@ -65,88 +58,100 @@ const ModalEditPost = () => {
         <div className="modal-wrapper"
             style={{ display: modalEditPost ? "flex" : "none" }}>
             <Modal.Dialog
-                className="bg-light text-dark rounded-1 p-4 w-100"
+                className="bg-light text-dark rounded-1 p-4 w-100 vh-50"
                 centered
                 size="lg"
             >
-                <Modal.Header>
-                    <Modal.Title>Изменить пост</Modal.Title>
-                    <Button variant="outline-secondary" size="sm" onClick={() => setModalEditPost(false)}>
+                <Modal.Header className="mx-3 mb-3">
+                    <Modal.Title >Изменить пост</Modal.Title>
+                    <Button variant="outline-secondary" size="sm"
+                        onClick={() => setModalEditPost(false)}>
                         <X />
                     </Button>
                 </Modal.Header>
                 <Container>
                     <Row>
-                        <Col md={6}>
-                            <Form onSubmit={addPost}>
-                                <Form.Group className="my-3">
-                                    <Form.Label htmlFor={"title"}>
-                                        <h5 className="text-muted">Заголовок поста</h5>
-                                    </Form.Label>
-                                    <Form.Control type={text}
-                                        id="title"
-                                        value={title}
-                                        onChange={(e) => setTitle(e.target.value)}
-                                    />
-                                </Form.Group>
-                                <div className="mb-3 rounded-1 w-50" style={{
-                                    backgroundImage: `url(${image})`,
-                                    backgroundSize: "contain",
-                                    height: "16.05rem",
-                                    backgroundPosition: "center",
-                                    backgroundRepeat: "no-repeat",
-                                    border: "solid 0.5px #adb5bd"
-                                }}></div>
-                                <Form.Group className="mb-3">
-                                    <Form.Label htmlFor="image">
-                                        <h5 className="text-muted">Изображение поста</h5>
-                                    </Form.Label>
-                                    <Form.Control
-                                        type="url"
-                                        id="image"
-                                        value={image}
-                                        onChange={(e) => setImage(e.target.value)}
-                                    />
-                                </Form.Group>
-                                <Form.Group className="mb-3">
-                                    <Form.Label htmlFor="text">
-                                        <h5 className="text-muted">Текст поста</h5>
-                                    </Form.Label>
-                                    <Form.Control as="textarea"
-                                        id="text"
-                                        value={text}
-                                        rows={5}
-                                        onChange={(e) => setText(e.target.value)}
-                                    />
-                                </Form.Group>
-                                <Form.Group className="mb-3">
-                                    <Form.Label htmlFor="tags">
-                                        <h5 className="text-muted">Теги</h5>
-                                    </Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        id="tags"
-                                        value={tag}
-                                        onChange={(e) => updTag(e.target.value)}
-                                    />
-                                    {tags.length > 0 && <Form.Text>
-                                        {tags.map(t => <span
-                                            className={`d-inline-block lh-1 bg-success text-light p-2 mt-2 me-2 rounded-1 `}
-                                            key={t}
-                                            onClick={() => delTag(t)}
-                                            style={{
-                                                pointerEvents: "auto"
-                                            }}
-                                        >{t}</span>)}
-                                    </Form.Text>}
-                                </Form.Group>
+                        <Col md={12}>
+                            <Form onSubmit={editPost}>
                                 <Row>
-                                    <Col md={4}>
-                                        <Button variant="light" type="submit">
-                                            Создать пост
-                                        </Button>
+                                    <Col md={6}>
+                                        <Form.Group className="my-3">
+                                            <Form.Label htmlFor={"title"}>
+                                                <h5 className="text-muted">Заголовок поста</h5>
+                                            </Form.Label>
+                                            <Form.Control type={text}
+                                                id="title"
+                                                value={title}
+                                                onChange={(e) => setTitle(e.target.value)}
+                                            />
+                                        </Form.Group>
+                                        <Form.Group className="mb-3">
+                                            <Form.Label htmlFor="text">
+                                                <h5 className="text-muted">Текст поста</h5>
+                                            </Form.Label>
+                                            <Form.Control as="textarea"
+                                                id="text"
+                                                value={text}
+                                                rows={5}
+                                                onChange={(e) => setText(e.target.value)}
+                                            />
+                                        </Form.Group>
+                                        <Form.Group className="mb-3">
+                                            <Form.Label htmlFor="tags">
+                                                <h5 className="text-muted">Теги</h5>
+                                            </Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                id="tags"
+                                                value={tag}
+                                                onChange={(e) => updTag(e.target.value)}
+                                            />
+                                            {tags.length > 0 && <Form.Text>
+                                                {tags.map(t => <span
+                                                    className={`d-inline-block lh-1 bg-success text-light p-2 mt-2 me-2 rounded-1 `}
+                                                    key={t}
+                                                    onClick={() => delTag(t)}
+                                                    style={{
+                                                        pointerEvents: "auto"
+                                                    }}
+                                                >{t}</span>)}
+                                                <p>Нажмите на тег, чтобы его удалить</p>
+                                            </Form.Text>}
+                                        </Form.Group>
+                                        <Row>
+                                            <Col md={6}>
+                                                <Button variant="outline-secondary" type="submit">
+                                                    Изменить
+                                                </Button>
+                                            </Col>
+                                        </Row>
+                                    </Col>
+
+                                    <Col md={6}>
+                                        <div className="mb-3 rounded-1 w-100" style={{
+                                            backgroundImage: `url(${image})`,
+                                            backgroundSize: "contain",
+                                            height: "17.70rem",
+                                            backgroundPosition: "center",
+                                            backgroundRepeat: "no-repeat",
+                                            border: "solid 0.5px #adb5bd"
+                                        }}></div>
+                                        <Form.Group className="mb-3">
+                                            <Form.Label htmlFor="image">
+                                                <h5 className="text-muted">Изображение поста</h5>
+                                            </Form.Label>
+                                            <Form.Control
+                                                type="url"
+                                                id="image"
+                                                value={image}
+                                                onChange={(e) => setImage(e.target.value)}
+                                            />
+                                        </Form.Group>
+
                                     </Col>
                                 </Row>
+
+
                             </Form>
                         </Col>
                     </Row>

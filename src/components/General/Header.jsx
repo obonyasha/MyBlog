@@ -1,6 +1,7 @@
 import { useContext } from "react";
-import { Col, Row, Navbar, Container, Nav, Button, Image } from "react-bootstrap";
-import { BoxArrowInRight, PlusCircle } from "react-bootstrap-icons";
+import { Link } from "react-router-dom";
+import { Col, Row, Container, Button, Image, Stack } from "react-bootstrap";
+import { BoxArrowInRight, PlusCircle, PostcardHeart } from "react-bootstrap-icons";
 // import { Link, useNavigate } from "react-router-dom";
 import Logo from "./Logo";
 import Ctx from "../../context";
@@ -16,47 +17,40 @@ const Header = () => {
 
 
     return (
-        <>
-            <Navbar bg="light" variant="light" className="sticky-md-top">
-                <Container className="header">
-                    <Row>
-                        <Col md={2}>
-                            <Logo />
-                        </Col>
-                        <Col md={4}>
-                            <Nav className="me-auto">
-                                <Nav.Link href="/line">Лента</Nav.Link>
-                            </Nav>
-                        </Col>
-                        <Col md={2} >
-                            <Nav className="me-auto h-100 w-100">
-                                <Nav.Link href="/addpost" title="Создать пост">
-                                    <PlusCircle className="h-100 w-100" />
-                                </Nav.Link>
-                            </Nav>
-                        </Col>
-                        <Col md={4}>
-                            {!user ?
-                                <Nav>
-                                    <Nav.Link href="/profile" title="Профиль">
-                                        <Button variant="light"
-                                            onClick={logIn} title="Войти"
-                                        >
-                                            <BoxArrowInRight />
-                                        </Button>                             </Nav.Link>
-                                </Nav>
-                                :
-                                <Nav>
-                                    <Nav.Link to="/profile" title="Профиль">
-                                        <Image src={profile.avatar} height="50" rounded />
-                                    </Nav.Link>
-                                </Nav>
-                            }
-                        </Col>
-                    </Row>
-                </Container>
-            </Navbar>
-        </>
+        <div className="w-100 bg-light sticky-md-top">
+            <Container>
+                <Stack direction="horizontal" gap={3}>
+                    <div className="p-2"><Logo /></div>
+                    <div className="p-2 ">
+                        <Link to="/" className="text-dark">Лента</Link>
+                    </div>
+                    <div className="p-2 ms-auto">
+                        <Link to="/addpost" title="Создать пост">
+                            <PlusCircle className="h-100 w-100 text-dark fs-1" />
+                        </Link>
+                    </div>
+                    <div className="p-2">
+                        <Link to="/favorites" title="Любимые посты">
+                            <PostcardHeart className="h-100 w-100 text-dark fs-1" />
+                        </Link>
+                    </div>
+                    <div className="p-2">
+                        {!user ?
+                            <Button variant="light"
+                                onClick={logIn} title="Войти"
+                            >
+                                <BoxArrowInRight />
+                            </Button>
+
+                            :
+                            <Link to="/profile" title="Профиль">
+                                <Image src={profile.avatar} height="50" rounded />
+                            </Link>
+                        }
+                    </div>
+                </Stack>
+            </Container>
+        </div>
     )
 }
 

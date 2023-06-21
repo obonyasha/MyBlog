@@ -26,9 +26,19 @@ a {
 }
 
 .bloge__text_img a {
-  text-align: start  !important;
+  text-align: start !important;
 }
 
-.header {
+.contaqner__post {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+input,
+textarea {
+  outline: none !important;
+}
+hr {
   width: 100%;
+  color: #d1d3d7;
+  margin: 0 !important;
 }

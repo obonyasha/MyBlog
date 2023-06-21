@@ -1,19 +1,18 @@
 import { useContext } from "react";
-
-import { Col, Container, Row, Spinner } from "react-bootstrap";
+import { Col, Container, Row, Spinner, Button } from "react-bootstrap";
 import Cardpost from "../components/Cardpost";
 
 import Ctx from "../context";
 
-const Line = () => {
-    const { posts } = useContext(Ctx);
-
+const PostsAuthor = () => {
+    const { posts, author } = useContext(Ctx);
+    const postsAuthor = posts.filter(el => el.author._id === author._id)
     return (
         <Container className="p-4">
             {posts ?
                 <>
                     <Row>
-                        {posts.setDataPerPage().map((el) =>
+                        {postsAuthor.map((el) =>
                             <Col md className="mb-4" key={el._id}>
                                 <Cardpost
                                     {...el}
@@ -28,4 +27,4 @@ const Line = () => {
     )
 }
 
-export default Line;
+export default PostsAuthor;

@@ -7,16 +7,18 @@ import Pagination from "../components/Pagination";
 
 import Ctx from "../context";
 
+
 const Line = () => {
     const { posts } = useContext(Ctx);
     const paginate = usePagination(posts, 20);
+
 
     useEffect(() => {
         paginate.step(1);
     }, [posts])
 
     return (
-        <Container className="p-4">
+        <Container className="p-4 h-100">
             <Row className="mb-4">
                 <Pagination hk={paginate} />
             </Row>
