@@ -18,36 +18,43 @@ const Cardpost = ({ img,
   likes,
   tags
 }) => {
-  const { userId, setServerPost, token, groupId } = useContext(Ctx);
+  const { userId, setServerPost, token, groupId, posts, setPostsAuthor, setAuthorPost } = useContext(Ctx);
   const [isLike, setIsLike] = useState(likes.includes(userId));
-  const datePublic = created_at.slice(0, 10);
+  const datePublic = new Date(created_at).toLocaleDateString();
   const navigate = useNavigate();
+  // let authorId = "";
 
-  // const allPostsAuthor = (e) => {
-  //   e.preventDefault();
-  //   e.stopPropagation();
-  //   navigate(`/posts/${author.name}`)
-  // }
-
-
+  const allPostsAuthor = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setAuthorPost(author);
+    setPostsAuthor(posts.filter(el => el.author._id === author._id));
+    navigate(`/posts/${author.name}`)
+  }
 
   return (
     <Link to={`/post/${_id}`}>
-      <Card style={{ width: '16rem' }} className="shadow-sm h-100">
-        <Row className="card__header">
-          <Col md={1}>
-            <Image src={author.avatar} height="50" rounded />
-          </Col>
-          <Col md={11}>
-            <p className="mb-1 fw-bold">{author.name}</p>
-            <p className="text-black-50 mb-0">{datePublic}</p>
-          </Col>
-        </Row>
+      <Card style={{ width: '100%' }} className="shadow-sm h-100 card__post">
+        <Button className="text-dark text-start transition"
+        title="Все посты автора"
+          variant="link"
+          onClick={(e) => allPostsAuthor(e)}>
+          <Row className="card__header">
+            <Col md={1}>
+              <Image src={author.avatar} height="75" rounded />
+            </Col>
+            <Col md={11}>
+              <p className="mb-1 fw-bold">{author.name}</p>
+              <p className="text-black-50 mb-0">{datePublic}</p>
+            </Col>
+          </Row>
+        </Button>
+
         <Image variant="top" src={img} alt="Картинка" className="mw-100" />
         <Card.Body>
-          <p className="mb-1 fw-bolder">{title}</p>
+          <p className="mb-1 fw-bolder ps-1">{title}</p>
           <Card.Text className="text-truncate">
-            <em>{text}</em>
+            <em className="ps-1">{text}</em>
           </Card.Text>
           {/* <Row>
             {tags.map((el, i) => 

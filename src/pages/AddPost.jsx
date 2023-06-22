@@ -13,7 +13,7 @@ const AddPost = () => {
     const [text, setText] = useState("");
     const [tag, setTag] = useState("");
     const [tags, setTags] = useState([]);
-    const [validated, setValidated] = useState(false);
+    // const [validated, setValidated] = useState(false);
 
     const clearForm = () => {
         setTitle("");
@@ -45,13 +45,14 @@ const AddPost = () => {
         //     e.stopPropagation();
         // }
 
-        setValidated(true);
+        // setValidated(true);
         const body = {
             title,
             image,
             text,
             tags
         }
+
         fetch(`https://api.react-learning.ru/v2/${groupId}/posts`, {
             method: "POST",
             headers: {
@@ -75,7 +76,7 @@ const AddPost = () => {
     }
 
     return (
-        <Container className="h-100 p-4">
+        <Container className="vh-100 p-4">
             <Row>
                 <h2>
                     Новый пост
@@ -97,7 +98,7 @@ const AddPost = () => {
                                 id="title"
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
-                                // required
+                            // required
                             />
                             {/* <Form.Control.Feedback type="invalid">
                                 Пожалуйста, укажите заголовок поста.
@@ -133,7 +134,7 @@ const AddPost = () => {
                                 value={text}
                                 rows={5}
                                 onChange={(e) => setText(e.target.value)}
-                                // required
+                            // required
                             />
                             {/* <Form.Control.Feedback type="invalid">
                                 Пожалуйста, заполните текст поста.
@@ -144,6 +145,7 @@ const AddPost = () => {
                                 <h5 className="text-muted">Теги</h5>
                             </Form.Label>
                             <Form.Control
+                                placeholder="Введите имя тега и нажмите пробел"
                                 type="text"
                                 id="tags"
                                 value={tag}

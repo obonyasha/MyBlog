@@ -24,30 +24,37 @@ const Header = () => {
                     <div className="p-2 ">
                         <Link to="/" className="text-dark">Лента</Link>
                     </div>
-                    <div className="p-2 ms-auto">
-                        <Link to="/addpost" title="Создать пост">
-                            <PlusCircle className="h-100 w-100 text-dark fs-1" />
-                        </Link>
-                    </div>
-                    <div className="p-2">
-                        <Link to="/favorites" title="Любимые посты">
-                            <PostcardHeart className="h-100 w-100 text-dark fs-1" />
-                        </Link>
-                    </div>
-                    <div className="p-2">
-                        {!user ?
+                    {user &&
+                        <>
+                            <div className="p-2 ms-auto">
+                                <Link to="/addpost" title="Создать пост">
+                                    <PlusCircle className="h-100 w-100 text-dark fs-1" />
+                                </Link>
+                            </div>
+                            <div className="p-2">
+                                <Link to="/favorites" title="Любимые посты">
+                                    <PostcardHeart className="h-100 w-100 text-dark fs-1" />
+                                </Link>
+                            </div>
+                        </>
+                    }
+
+                    {!user ?
+                        <div className="p-2  ms-auto">
                             <Button variant="light"
                                 onClick={logIn} title="Войти"
                             >
                                 <BoxArrowInRight />
                             </Button>
-
-                            :
+                        </div>
+                        :
+                        <div className="p-2 ">
                             <Link to="/profile" title="Профиль">
                                 <Image src={profile.avatar} height="50" rounded />
                             </Link>
-                        }
-                    </div>
+                        </div>
+                    }
+
                 </Stack>
             </Container>
         </div>

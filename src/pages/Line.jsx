@@ -9,7 +9,7 @@ import Ctx from "../context";
 
 
 const Line = () => {
-    const { posts } = useContext(Ctx);
+    const { posts, user } = useContext(Ctx);
     const paginate = usePagination(posts, 20);
 
 
@@ -19,26 +19,41 @@ const Line = () => {
 
     return (
         <Container className="p-4 h-100">
-            <Row className="mb-4">
-                <Pagination hk={paginate} />
+
+            <Row>
+                <h3>
+                    Добро пожаловать!
+                </h3>
+                <p>
+                    Читай посты других и публикуй свои.
+                </p>
             </Row>
-            {posts ?
+            {!user &&
+                <Row>
+                    <h5>Для просмотра и добавления постов необходима авторизация</h5>
+                </Row>
+            }
+            {user &&
+                posts &&
                 <>
+                    <Row className="mb-4">
+                        <Pagination hk={paginate} />
+                    </Row>
                     <Row>
                         {paginate.setDataPerPage().map((el) =>
-                            <Col md className="mb-4" key={el._id}>
+                            <Col md={4} className="mb-4" key={el._id}>
                                 <Cardpost
                                     {...el}
                                     img={el.image}
                                 />
                             </Col>)}
                     </Row>
-                </> :
-                <Spinner animation="border" />
+                    <Row className="mb-4">
+                        <Pagination hk={paginate} />
+                    </Row>
+                </>
             }
-            <Row className="mb-4">
-                <Pagination hk={paginate} />
-            </Row>
+
         </Container>
     )
 }

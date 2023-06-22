@@ -12,7 +12,7 @@ import Post from "./pages/Post";
 import Profile from "./pages/Profile";
 import AddPost from "./pages/AddPost";
 import Favorites from "./pages/Favorites";
-// import PostsAuthor from "./pages/PostsAuthor";
+import PostsAuthor from "./pages/PostsAuthor";
 
 const App = () => {
     const [user, setUser] = useState(localStorage.getItem("blogUser"));
@@ -26,7 +26,8 @@ const App = () => {
     const [modalEditProfile, setModalEditProfile] = useState(false);
     const [profile, setProfile] = useState({});
     const [modalEditPost, setModalEditPost] = useState(false);
-    const [ author, setAuthor] = useState();
+    const [authorPost, setAuthorPost] = useState();
+    const [postsAuthor, setPostsAuthor] = useState([]);
 
 
     useEffect(() => {
@@ -49,8 +50,6 @@ const App = () => {
                 setProfile(data)
             })
     }, [token])
-
-
 
     useEffect(() => {
         if (token) {
@@ -90,18 +89,19 @@ const App = () => {
             setProfile,
             modalEditPost,
             setModalEditPost,
-            author, 
-            setAuthor
+            authorPost, 
+            setAuthorPost,
+            postsAuthor,
+            setPostsAuthor
         }}>
             <Header />
             <Routes>
-                {/* <Route path="/" element={<Main />} /> */}
                 <Route path="/" element={<Line />} />
                 <Route path="/post/:id" element={<Post />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/addpost" element={<AddPost />} />
                 <Route path="/favorites" element={<Favorites />} />
-                {/* <Route path="/posts/:name" element={<PostsAuthor />} /> */}
+                <Route path="/posts/:name" element={<PostsAuthor />} />
             </Routes>
             <ModalAuth />
         </Ctx.Provider>

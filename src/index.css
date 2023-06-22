@@ -12,12 +12,16 @@ code {
     monospace;
 }
 
-a {
+a,
+button {
   text-decoration: none !important;
 }
 
 #root {
-  background-color: #79af9382;
+  /* background-color: #79af9382; */
+  /* background-image: url("../src/assets/images/фон1.jpg"); */
+  /* background: linear-gradient(to bottom right, #70a94d82, pink); */
+
 }
 
 .bloge__text_img img {
@@ -33,12 +37,22 @@ a {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
+
 input,
 textarea {
   outline: none !important;
 }
+
 hr {
   width: 100%;
   color: #d1d3d7;
   margin: 0 !important;
+}
+
+.transition {
+  transition: ease-out 0.2s;
+}
+
+.transition:hover {
+  transform: scale(1.1);
 }

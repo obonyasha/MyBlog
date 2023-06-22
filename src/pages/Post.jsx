@@ -10,7 +10,7 @@ import updLike from "../utils/updLike";
 
 
 const Post = () => {
-    const { groupId, token, userId, setServerPost, setModalEditPost, profile, setAuthor } = useContext(Ctx);
+    const { groupId, token, userId, setServerPost, setModalEditPost } = useContext(Ctx);
     const [post, setPost] = useState(null);
     const [text, setText] = useState("");
     const [comments, setComments] = useState([]);
@@ -30,7 +30,7 @@ const Post = () => {
                 console.log(data, data.err);
                 setPost(data);
                 setIsLike(data.likes.includes(userId));
-                // setAuthor(data.author);
+                // setAuthor(data.author._id);
                 return data
             })
     }, [token]);
@@ -114,7 +114,7 @@ const Post = () => {
                         <Col md={7}>
                             <Row className="mb-3">
                                 <Col md={8}>
-                                    <Image src={post.image} alt="Картинка" className="mw-100" rounded />
+                                    <Image src={post.image} alt="Картинка" className="mw-100 shadow-sm" rounded />
                                 </Col>
                             </Row>
                         </Col>
@@ -122,12 +122,12 @@ const Post = () => {
                             <Row className="mb-3">
                                 <Col md={2}>
                                     {/* <Link to="/profile" title="Посты автора"> */}
-                                    <Image src={profile.avatar} height="50" rounded />
+                                    <Image src={post.author.avatar} height="50" rounded />
                                     {/* </Link> */}
                                 </Col>
                                 <Col md={10}>
-                                    <h5 className="mb-1">{profile.name}</h5>
-                                    <p className="text-black-50 mb-0">{post.created_at.slice(0, 10)}</p>
+                                    <h5 className="mb-1">{post.author.name}</h5>
+                                    <p className="text-black-50 mb-0">{new Date(post.created_at).toLocaleDateString()}</p>
                                 </Col>
                             </Row>
                             <Row className="mb-3">
@@ -142,7 +142,7 @@ const Post = () => {
                                     </Button>
                                 </Col>
                             </Row>
-                            {profile._id === userId &&
+                            {post.author._id === userId &&
                                 <>
                                     <Row className="mb-3">
                                         <Col md={6}>
@@ -199,7 +199,7 @@ const Post = () => {
                             comments.map(el =>
                                 <Row key={el._id} className="mb-3">
                                     <Row className="mb-3 w-50">
-                                        <Col md={1} className="me-3">
+                                        <Col md={2}>
                                             <Image src={el.author.avatar} height="50" rounded />
                                         </Col>
                                         <Col md={10}>

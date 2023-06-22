@@ -1,5 +1,5 @@
-import { useEffect, useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Container, Row, Image, Col, Button } from "react-bootstrap";
 import { BoxArrowInLeft } from "react-bootstrap-icons";
 import Ctx from "../context";
@@ -7,6 +7,8 @@ import ModalEditProfile from "../components/ModalEditProfile";
 import Cardpost from "../components/Cardpost";
 
 const Profile = () => {
+    const navigate = useNavigate();
+
     const {
         posts,
         setUser,
@@ -21,6 +23,7 @@ const Profile = () => {
         localStorage.removeItem("blogToken");
         localStorage.removeItem("userBlogID");
         localStorage.removeItem("groupId");
+        navigate("/")
     }
 
     const updProfile = () => {
@@ -44,7 +47,7 @@ const Profile = () => {
                 </Col>
                 <Col md={4} sm>
                     <Row className="mb-3">
-                        <Col md={8}  sm={8}>
+                        <Col md={6} sm={8}>
                             <Row>
                                 <Button variant="light" className="py-2"
                                     onClick={updProfile}>
@@ -54,14 +57,12 @@ const Profile = () => {
                         </Col>
                     </Row>
                     <Row className="mb-3">
-                        <Col md={8}  sm={8}>
-                            
-                                <Link to="/addpost" className="p-0">
-                                   <Row> <Button variant="light">
-                                        Создать пост
-                                    </Button></Row>
-                                </Link>
-                            
+                        <Col md={6} sm={8}>
+                            <Link to="/addpost" className="p-0">
+                                <Row> <Button variant="light">
+                                    Создать пост
+                                </Button></Row>
+                            </Link>
                         </Col>
                     </Row>
                     <Row className="mb-3">

@@ -101,6 +101,7 @@ const ModalEditPost = ({ titlePost, imagePost, textPost, tagsPost, id }) => {
                                                 <h5 className="text-muted">Теги</h5>
                                             </Form.Label>
                                             <Form.Control
+                                                placeholder="Введите имя тега и нажмите пробел"
                                                 type="text"
                                                 id="tags"
                                                 value={tag}

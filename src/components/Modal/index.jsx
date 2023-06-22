@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Modal, Button, Container, Form, Row, Col } from "react-bootstrap";
+import { Modal, Button, Container, Form } from "react-bootstrap";
 import { X } from "react-bootstrap-icons";
 import "./style.css";
 import Ctx from "../../context";
@@ -13,7 +13,7 @@ const ModalAuth = () => {
 	const [pwd, setPwd] = useState("");
 	const [testPwd, setTestPwd] = useState("");
 	const navigate = useNavigate();
-	const { setUser, modalActive, setModalActive, api } = useContext(Ctx);
+	const { setUser, modalActive, setModalActive } = useContext(Ctx);
 
 	const testAccess = {
 		color: pwd === testPwd ? "forestgreen" : "crimson"
@@ -84,7 +84,7 @@ const ModalAuth = () => {
 					clearForm();
 					setModalActive(false);
 					setUser(data.data.name);
-					// navigate("/profile");
+					navigate("/profile");
 				}
 			}
 		}
@@ -128,7 +128,7 @@ const ModalAuth = () => {
 							onChange={(e) => setEmail(e.target.value)}
 						/>
 					</Form.Group>
-					<Form.Group>
+					<Form.Group className="mb-3">
 						<Form.Label htmlFor="password">Пароль</Form.Label>
 						<Form.Control
 							type="password"
@@ -138,7 +138,7 @@ const ModalAuth = () => {
 						/>
 					</Form.Group>
 					{!auth &&
-						<Form.Group>
+						<Form.Group  className="mb-3">
 							<Form.Label htmlFor="testpwd">	Повторить пароль</Form.Label>
 							<Form.Control
 								type="password"
@@ -149,7 +149,7 @@ const ModalAuth = () => {
 							/>
 						</Form.Group>
 					}
-					<Button variant="secondary"
+					<Button variant="secondary" className="me-1"
 						disabled={!auth && (!pwd || pwd !== testPwd)}
 						onClick={sendForm}
 					>
