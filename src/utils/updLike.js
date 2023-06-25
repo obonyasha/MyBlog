@@ -10,7 +10,6 @@ const func = (e, state, setIsLike, setServerPost, token, _id, groupId) => {
     })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
             setServerPost(function (old) {
                 const arr = old.map(el => {
                     if (el._id === _id) {

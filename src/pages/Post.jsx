@@ -6,17 +6,27 @@ import { Heart, HeartFill, SendCheck } from "react-bootstrap-icons";
 import Ctx from "../context";
 import ModalEditPost from "../components/ModalEditPost";
 import updLike from "../utils/updLike";
+import updPost from "../utils/updPost";
+import delPost from "../utils/delPost";
 
 
 
 const Post = () => {
-    const { groupId, token, userId, setServerPost, setModalEditPost } = useContext(Ctx);
+    const { groupId,
+        token,
+        userId,
+        setServerPost,
+        setModalEditPost,
+        setAuthorPost,
+        setPostsAuthor,
+        posts } = useContext(Ctx);
     const [post, setPost] = useState(null);
     const [text, setText] = useState("");
     const [comments, setComments] = useState([]);
     const [isLike, setIsLike] = useState(false);
     const { id } = useParams();
     const navigate = useNavigate();
+    // const datePublic = new Date(post.created_at).toLocaleDateString();
 
 
     useEffect(() => {
@@ -37,23 +47,6 @@ const Post = () => {
 
     const clearForm = () => {
         setText("");
-    }
-
-    const updPost = () => {
-        setModalEditPost(true)
-    }
-    const delPost = () => {
-        fetch(`https://api.react-learning.ru/v2/${groupId}/posts/${id}`, {
-            method: "DELETE",
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                setServerPost(prev => prev.filter(el => el._id !== id));
-                navigate("/profile")
-            })
     }
 
     useEffect(() => {
@@ -101,6 +94,14 @@ const Post = () => {
             })
     }
 
+    const allPostsAuthor = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        setAuthorPost(post.author);
+        setPostsAuthor(posts.filter(el => el.author._id === post.author._id));
+        navigate(`/posts/${post.author.name}`)
+    }
+
     return (
         <Container className="p-4">
             <Row className="mb-3">
@@ -110,6 +111,19 @@ const Post = () => {
             </Row>
             {post ?
                 <>
+                    <Button className="text-dark text-start transition rounded-2 mb-3"
+                        title="Все посты автора"
+                        variant="link"
+                        onClick={(e) => allPostsAuthor(e)}>
+                        <Row className="">
+                            <Col md={3} className="me-3">
+                                <Image src={post.author.avatar} height="25" rounded />
+                            </Col>
+                            <Col md={5} className="fw-bold fs-6">
+                                {post.author.name}
+                            </Col>
+                        </Row>
+                    </Button>
                     <Row>
                         <Col md={7}>
                             <Row className="mb-3">
@@ -117,23 +131,13 @@ const Post = () => {
                                     <Image src={post.image} alt="Картинка" className="mw-100 shadow-sm" rounded />
                                 </Col>
                             </Row>
-                        </Col>
-                        <Col md={5}>
-                            <Row className="mb-3">
-                                <Col md={2}>
-                                    {/* <Link to="/profile" title="Посты автора"> */}
-                                    <Image src={post.author.avatar} height="50" rounded />
-                                    {/* </Link> */}
+                            <Row className="text-black-50 fs-6">
+                                <Col md={6}>
+                                    {new Date(post.created_at).toLocaleDateString()}
                                 </Col>
-                                <Col md={10}>
-                                    <h5 className="mb-1">{post.author.name}</h5>
-                                    <p className="text-black-50 mb-0">{new Date(post.created_at).toLocaleDateString()}</p>
-                                </Col>
-                            </Row>
-                            <Row className="mb-3">
-                                <Col md={2}>
+                                <Col md={6}>
                                     <Button variant="link" className="text-danger"
-                                        onClick={(e) => updLike(e, !isLike, setIsLike,  setServerPost, token, id, groupId)}>
+                                        onClick={(e) => updLike(e, !isLike, setIsLike, setServerPost, token, id, groupId)}>
                                         {isLike ?
                                             <HeartFill />
                                             :
@@ -142,19 +146,21 @@ const Post = () => {
                                     </Button>
                                 </Col>
                             </Row>
+                        </Col>
+                        <Col md={5}>
                             {post.author._id === userId &&
                                 <>
                                     <Row className="mb-3">
                                         <Col md={6}>
                                             <Row><Button variant="outline-secondary"
-                                                onClick={updPost}
+                                                onClick={() => updPost(setModalEditPost)}
                                             >Изменить пост</Button></Row>
                                         </Col>
                                     </Row>
                                     <Row>
                                         <Col md={6}>
                                             <Row><Button variant="outline-danger"
-                                                onClick={delPost}
+                                                onClick={() => delPost(groupId, id, token, setServerPost, navigate)}
                                             >Удалить пост</Button></Row>
                                         </Col>
                                     </Row>
@@ -219,8 +225,8 @@ const Post = () => {
                                                     >Удалить комментарий</Button></Row>
                                             </Col>
                                         </Row>
-                                    }                                    
-                                    <hr className="ms-3"/>
+                                    }
+                                    <hr className="ms-3" />
                                 </Row>
                             )
                             :

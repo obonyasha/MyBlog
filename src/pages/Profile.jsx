@@ -1,14 +1,17 @@
-import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Container, Row, Image, Col, Button } from "react-bootstrap";
 import { BoxArrowInLeft } from "react-bootstrap-icons";
 import Ctx from "../context";
 import ModalEditProfile from "../components/ModalEditProfile";
-import Cardpost from "../components/Cardpost";
+import CardPostAuthor from "../components/CardPostAuthor";
 
 const Profile = () => {
     const navigate = useNavigate();
-
+    const location = useLocation();
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location]);
     const {
         posts,
         setUser,
@@ -78,24 +81,22 @@ const Profile = () => {
                     </Row>
                 </Col>
             </Row>
-            <Row>
-                <Row className="mb-3 px-0">
-                    <h5 className="text-muted">Мои посты</h5>
-                </Row>
-                {postsUser &&
-                    <Container>
-                        <Row className="contaqner__post">
-                            {postsUser.map((el) =>
-                                <Col md={4} sm={4} className="mb-4" key={el._id}>
-                                    <Cardpost
-                                        {...el}
-                                        img={el.image}
-                                    />
-                                </Col>)}
-                        </Row>
-                    </Container>
-                }
+            <Row className="mb-3 px-0">
+                <h5 className="text-muted">Мои посты</h5>
             </Row>
+            {postsUser &&
+                <>
+                    <Row>
+                        {postsUser.map((el) =>
+                            <Col md={4} className="mb-4" key={el._id}>
+                                <CardPostAuthor
+                                    {...el}
+                                    img={el.image}
+                                />
+                            </Col>)}
+                    </Row>
+                </>
+            }
             <ModalEditProfile />
         </Container>
     )

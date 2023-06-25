@@ -54,5 +54,12 @@ hr {
 }
 
 .transition:hover {
-  transform: scale(1.1);
+  background-color: #b6efd8;
+}
+
+.transition_red {
+  transition: ease-out 0.2s;
+}
+.transition_red:hover {
+  background-color: #f36666a7;
 }

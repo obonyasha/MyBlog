@@ -89,7 +89,7 @@ const App = () => {
             setProfile,
             modalEditPost,
             setModalEditPost,
-            authorPost, 
+            authorPost,
             setAuthorPost,
             postsAuthor,
             setPostsAuthor

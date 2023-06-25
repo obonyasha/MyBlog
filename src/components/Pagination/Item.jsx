@@ -11,7 +11,7 @@ const Item = ({
     end = false,
     next = false,
     prev = false,
-    active=false,
+    active = false,
     onClick
 }) => {
     let result;
