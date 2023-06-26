@@ -28,6 +28,10 @@ const App = () => {
     const [modalEditPost, setModalEditPost] = useState(false);
     const [authorPost, setAuthorPost] = useState();
     const [postsAuthor, setPostsAuthor] = useState([]);
+    const [text, setText] = useState("");
+    const [quantity, setQuantity] = useState();
+    const [tagPosts, setTagPosts] = useState([]);
+
 
 
     useEffect(() => {
@@ -52,6 +56,10 @@ const App = () => {
     }, [token])
 
     useEffect(() => {
+        setText("")
+    }, [token])
+
+    useEffect(() => {
         if (token) {
             fetch(`https://api.react-learning.ru/v2/${groupId}/posts`, {
                 headers: {
@@ -60,7 +68,6 @@ const App = () => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    //console.log(data);
                     setServerPost(data)
                 })
         }
@@ -69,6 +76,17 @@ const App = () => {
     useEffect(() => {
         setPosts(serverPost)
     }, [serverPost])
+
+    useEffect(() => {
+        if (text) {
+            let result = serverPost.filter(el => new RegExp(text, "i").test(el.name))
+            setPosts(result);
+            setQuantity(result.length);
+        } else {
+            setPosts(serverPost);
+            setQuantity(serverPost.length)
+        }
+    }, [serverPost]);
 
     return (
         <Ctx.Provider value={{
@@ -82,6 +100,8 @@ const App = () => {
             groupId,
             setGroupId,
             posts,
+            setPosts,
+            serverPost,
             setServerPost,
             modalEditProfile,
             setModalEditProfile,
@@ -92,7 +112,13 @@ const App = () => {
             authorPost,
             setAuthorPost,
             postsAuthor,
-            setPostsAuthor
+            setPostsAuthor,
+            text,
+            setText,
+            quantity,
+            setQuantity,
+            tagPosts,
+            setTagPosts
         }}>
             <Header />
             <Routes>

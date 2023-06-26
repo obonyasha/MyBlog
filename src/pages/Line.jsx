@@ -11,8 +11,8 @@ import Ctx from "../context";
 
 
 const Line = () => {
-    const { posts, user } = useContext(Ctx);
-    const paginate = usePagination(posts, 20);
+    const { posts, user, tagPosts} = useContext(Ctx);
+    const paginate = usePagination(tagPosts.length > 0 ? tagPosts : posts, 20);
     const location = useLocation();
     useEffect(() => {
         window.scrollTo(0, 0);

@@ -4,10 +4,11 @@ import { Col, Row, Container, Button, Image, Stack } from "react-bootstrap";
 import { BoxArrowInRight, PlusCircle, PostcardHeart } from "react-bootstrap-icons";
 // import { Link, useNavigate } from "react-router-dom";
 import Logo from "./Logo";
+import Search from "../Search";
 import Ctx from "../../context";
 
 const Header = () => {
-    const { user, setModalActive, profile } = useContext(Ctx);
+    const { user, setModalActive, profile, serverPost, setPosts } = useContext(Ctx);
 
     const logIn = (e) => {
         e.preventDefault();
@@ -15,18 +16,25 @@ const Header = () => {
         setModalActive(true);
     }
 
-
     return (
         <div className="w-100 bg-light sticky-md-top">
             <Container>
                 <Stack direction="horizontal" gap={3}>
-                    <div className="p-2"><Logo /></div>
-                    <div className="p-2 ">
+                    <div className="p-2">
+                        <Logo />
+                    </div>
+                    <div className="p-2">
                         <Link to="/" className="text-dark">Лента</Link>
+                    </div>
+                    <div className="p-2  ms-auto">
+                        <Search
+                            arr={serverPost}
+                            upd={setPosts}
+                        />
                     </div>
                     {user &&
                         <>
-                            <div className="p-2 ms-auto">
+                            <div className="p-2">
                                 <Link to="/addpost" title="Создать пост">
                                     <PlusCircle className="h-100 w-100 text-dark fs-1" />
                                 </Link>
@@ -38,7 +46,6 @@ const Header = () => {
                             </div>
                         </>
                     }
-
                     {!user ?
                         <div className="p-2  ms-auto">
                             <Button variant="light"
@@ -54,7 +61,6 @@ const Header = () => {
                             </Link>
                         </div>
                     }
-
                 </Stack>
             </Container>
         </div>

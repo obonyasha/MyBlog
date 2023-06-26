@@ -39,10 +39,10 @@ const Profile = () => {
             <Row>
                 <Col md={8} xs={12}>
                     <Row className="mb-3">
-                        <Col md={1} xs={1} className="me-2">
-                            <Image src={profile.avatar} height="50" rounded />
+                        <Col md={2} xs={1} className="me-2">
+                            <Image src={profile.avatar} height="100" rounded />
                         </Col>
-                        <Col md={10} xs={10} className="me-2">
+                        <Col md={7} xs={10} className="me-2">
                             <p className="mb-1 fw-bold">{profile.name}</p>
                             <p className="text-black-50 mb-0">{profile.about}</p>
                         </Col>
