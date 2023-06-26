@@ -11,8 +11,8 @@ import Ctx from "../context";
 
 
 const Line = () => {
-    const { posts, user, tagPosts} = useContext(Ctx);
-    const paginate = usePagination(tagPosts.length > 0 ? tagPosts : posts, 20);
+    const { posts, user, searchPosts, quantity, text } = useContext(Ctx);
+    const paginate = usePagination(searchPosts.length > 0 ? searchPosts : posts, 20);
     const location = useLocation();
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -24,7 +24,19 @@ const Line = () => {
 
     return (
         <Container className="p-4 h-100">
-            <Banner />
+            {quantity > 0 ?
+                <Row>
+                    <h5>По Вашему запросу найдено {quantity} постов</h5>
+                </Row>
+                :
+                quantity === 0 && text ?
+                    <Row>
+                        <h5>По Вашему запросу найдено 0 постов</h5>
+                    </Row>
+                    :
+                    <Banner />
+            }
+            {/* <Banner /> */}
             {!user &&
                 <Row>
                     <h5>Для просмотра и добавления постов необходима авторизация</h5>

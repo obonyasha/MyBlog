@@ -13,7 +13,7 @@ const Profile = () => {
         window.scrollTo(0, 0);
     }, [location]);
     const {
-        posts,
+        serverPost,
         setUser,
         user,
         setModalEditProfile,
@@ -32,7 +32,7 @@ const Profile = () => {
     const updProfile = () => {
         setModalEditProfile(true);
     }
-    const postsUser = posts.filter(el => el.author._id === profile._id)
+    const postsUser = serverPost.filter(el => el.author._id === profile._id)
 
     return (
         <Container className="p-3 h-100">

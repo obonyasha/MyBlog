@@ -28,7 +28,7 @@ const Cardpost = ({ img,
     setAuthorPost,
     setQuantity,
     serverPost,
-    setTagPosts } = useContext(Ctx);
+    setSearchPosts} = useContext(Ctx);
 
   const [isLike, setIsLike] = useState(likes.includes(userId));
   const datePublic = new Date(created_at).toLocaleDateString();
@@ -46,7 +46,7 @@ const Cardpost = ({ img,
     e.stopPropagation();
     e.preventDefault();
     let result = serverPost.filter(el => el.tags.join().toLowerCase().includes(tag.toLowerCase()));
-    setTagPosts(result);
+    setSearchPosts(result);
     setQuantity(result.length);
     navigate("/")
   }
@@ -72,10 +72,10 @@ const Cardpost = ({ img,
         </Button>
         <Image variant="top" src={img} alt="Картинка" className="mw-100" />
         <Card.Body>
-          <p className="mb-1 fw-bolder ps-1">{title}</p>
-          <Card.Text className="text-truncate">
-            <Row>
-              <em className="ps-1 ms-2">{text}</em>
+          <p className="mb-1 fw-bolder ms-1">{title}</p>
+          <Card.Text>
+            <Row className="mw-100">
+              <em className="ms-3 p-0 text-truncate">{text}</em>
             </Row>
           </Card.Text>
         </Card.Body>

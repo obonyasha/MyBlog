@@ -29,8 +29,8 @@ const App = () => {
     const [authorPost, setAuthorPost] = useState();
     const [postsAuthor, setPostsAuthor] = useState([]);
     const [text, setText] = useState("");
-    const [quantity, setQuantity] = useState();
-    const [tagPosts, setTagPosts] = useState([]);
+    const [quantity, setQuantity] = useState(0);
+    const [searchPosts, setSearchPosts] = useState([]);
 
 
 
@@ -79,12 +79,10 @@ const App = () => {
 
     useEffect(() => {
         if (text) {
-            let result = serverPost.filter(el => new RegExp(text, "i").test(el.name))
-            setPosts(result);
-            setQuantity(result.length);
+            setQuantity(searchPosts.length);
         } else {
+            setQuantity(0)
             setPosts(serverPost);
-            setQuantity(serverPost.length)
         }
     }, [serverPost]);
 
@@ -117,8 +115,8 @@ const App = () => {
             setText,
             quantity,
             setQuantity,
-            tagPosts,
-            setTagPosts
+            searchPosts, 
+            setSearchPosts
         }}>
             <Header />
             <Routes>

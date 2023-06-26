@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Form, Row, Button, InputGroup } from "react-bootstrap";
 import { Binoculars } from "react-bootstrap-icons";
 import { Link, useNavigate } from "react-router-dom";
@@ -22,15 +22,15 @@ const Search = ({ arr, upd }) => {
                     placeholder="Хочу почитать про..."
                     aria-describedby="basic-addon2">
                 </Form.Control>
-
+                <Link to="/">
+                
                 <Button variant="outline-secondary"
                     id="button-addon2"
                     title="Искать"
-                    onClick={e => searchByText(e, setText, arr, text, upd, setQuantity, navigate)}
+                    // onClick={e => searchByText(e, setText, arr, text, upd, setQuantity, navigate)}
                 >
                     <Binoculars />
-                </Button>
-
+                </Button></Link>
             </InputGroup>
         </Row>
     )

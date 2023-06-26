@@ -4,7 +4,7 @@ import Cardpost from "../components/Cardpost"
 import Ctx from "../context"
 
 const Favorites = () => {
-    const { posts, userId } = useContext(Ctx);
+    const { serverPost, userId } = useContext(Ctx);
 
     return (
         <Container className="vh-100">
@@ -12,7 +12,7 @@ const Favorites = () => {
                 <h2 className="p-3 text-muted">Любимые посты</h2>
             </Row>
             <Row>
-                {posts.filter(el => el.likes.includes(userId)).map((el) =>
+                {serverPost.filter(el => el.likes.includes(userId)).map((el) =>
                     <Col md={4} sm={4} className="mb-4" key={el._id}>
                         <Cardpost
                             {...el}

@@ -8,12 +8,26 @@ import Search from "../Search";
 import Ctx from "../../context";
 
 const Header = () => {
-    const { user, setModalActive, profile, serverPost, setPosts } = useContext(Ctx);
+    const { user,
+        setModalActive,
+        profile,
+        serverPost,
+        setPosts,
+        setSearchPosts,
+        setQuantity,
+        setText } = useContext(Ctx);
 
     const logIn = (e) => {
         e.preventDefault();
         localStorage.setItem("blogUser", "lk-blog");
         setModalActive(true);
+    }
+
+    const linkLine = () => {
+        setSearchPosts([]);
+        setQuantity(0);
+        setPosts(serverPost);
+        setText("")
     }
 
     return (
@@ -24,7 +38,9 @@ const Header = () => {
                         <Logo />
                     </div>
                     <div className="p-2">
-                        <Link to="/" className="text-dark">Лента</Link>
+                        <Button variant="outline-light" className="border-0" onClick={linkLine}>
+                            <Link to="/" className="text-dark">Лента</Link>
+                        </Button>
                     </div>
                     <div className="p-2  ms-auto">
                         <Search
@@ -40,9 +56,11 @@ const Header = () => {
                                 </Link>
                             </div>
                             <div className="p-2">
-                                <Link to="/favorites" title="Любимые посты">
-                                    <PostcardHeart className="h-100 w-100 text-dark fs-1" />
-                                </Link>
+                                <Button variant="outline-light" className="border-0 p-0" onClick={linkLine}>
+                                    <Link to="/favorites" title="Любимые посты">
+                                        <PostcardHeart className="h-100 w-100 text-dark fs-1" />
+                                    </Link>
+                                </Button>
                             </div>
                         </>
                     }
