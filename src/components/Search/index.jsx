@@ -1,14 +1,14 @@
 import { useContext } from "react";
 import { Form, Row, Button, InputGroup } from "react-bootstrap";
-import { Binoculars } from "react-bootstrap-icons";
-import { Link, useNavigate } from "react-router-dom";
+import { Binoculars, X } from "react-bootstrap-icons";
+import { useNavigate } from "react-router-dom";
 
 import Ctx from "../../context";
 import searchByText from "../../utils/searchByText";
 
 
 const Search = ({ arr, upd }) => {
-    const { text, setText, setQuantity } = useContext(Ctx);
+    const { text, setText, setQuantity, setPosts, serverPost } = useContext(Ctx);
     const navigate = useNavigate();
 
     return (
@@ -22,15 +22,20 @@ const Search = ({ arr, upd }) => {
                     placeholder="Хочу почитать про..."
                     aria-describedby="basic-addon2">
                 </Form.Control>
-                <Link to="/">
-                
-                <Button variant="outline-secondary"
+                {text &&
+                    <Button variant="outline-light text-dark border-top border-bottom bg-white border-start-0"
+                        onClick={() => { setText(""); setPosts(serverPost); setQuantity(0) }}
+                    >
+                        <X />
+                    </Button>
+                }
+                <Button variant="outline-secondary border-left"
                     id="button-addon2"
                     title="Искать"
-                    // onClick={e => searchByText(e, setText, arr, text, upd, setQuantity, navigate)}
+                    onClick={() => navigate("/")}
                 >
                     <Binoculars />
-                </Button></Link>
+                </Button>
             </InputGroup>
         </Row>
     )

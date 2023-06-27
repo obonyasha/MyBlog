@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Button, Col, Container, Form, Image, InputGroup, NavLink, Row, Spinner } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Heart, HeartFill, SendCheck } from "react-bootstrap-icons";
+import { Heart, HeartFill, SendCheck, Trash3 } from "react-bootstrap-icons";
 import Ctx from "../context";
 import ModalEditPost from "../components/ModalEditPost";
 import updLike from "../utils/updLike";
@@ -115,12 +115,13 @@ const Post = () => {
                         title="Все посты автора"
                         variant="link"
                         onClick={(e) => allPostsAuthor(e)}>
-                        <Row className="">
-                            <Col md={3} className="me-3">
-                                <Image src={post.author.avatar} height="25" rounded />
+                        <Row className="card__header mb-3">
+                            <Col md={1}>
+                                <Image src={post.author.avatar} height="75" rounded />
                             </Col>
-                            <Col md={5} className="fw-bold fs-6">
-                                {post.author.name}
+                            <Col md={5}>
+                                <p className="fw-bold fs-6 p-0 mb-1">{post.author.name}</p>                            
+                                <em className="fs-6 p-0 m-0">{post.author.about}</em>
                             </Col>
                         </Row>
                     </Button>
@@ -136,7 +137,7 @@ const Post = () => {
                                     {new Date(post.created_at).toLocaleDateString()}
                                 </Col>
                                 <Col md={6}>
-                                    <Button variant="link" className="text-danger"
+                                    <Button variant="link" className="text-danger p-0"
                                         onClick={(e) => updLike(e, !isLike, setIsLike, setServerPost, token, id, groupId)}>
                                         {isLike ?
                                             <HeartFill />
@@ -177,7 +178,7 @@ const Post = () => {
                         <div className="mw-100 mh-100 bloge__text_img" dangerouslySetInnerHTML={{ __html: post.text }}></div>
                         {/* <p className="lh-base">{post.text}</p> */}
                     </Row>
-                    <Row className="mb-3 bg-light rounded-2">
+                    <Row className="mb-3 bg-light rounded-2 w-75">
                         <Row className="mb-3">
                             <h3 className="mt-3">Коментарии</h3>
                         </Row>
@@ -206,26 +207,29 @@ const Post = () => {
                                 <Row key={el._id} className="mb-3">
                                     <Row className="mb-3 w-50">
                                         <Col md={2}>
-                                            <Image src={el.author.avatar} height="50" rounded />
+                                            <Image src={el.author.avatar} height="25" rounded />
                                         </Col>
                                         <Col md={10}>
                                             <h5 className="mb-1">{el.author.name}</h5>
-                                            <p className="text-black-50 mb-0">{el.created_at.slice(0, 10)}</p>
+                                            <p className="text-black-50 mb-0">{new Date(el.created_at).toLocaleDateString()}</p>
                                         </Col>
                                     </Row>
-                                    <p>{el.text}</p>
-                                    {el.author._id === userId &&
-                                        <Row className="ms-1 mb-3 ">
-                                            <Col md={2}>
-                                                <Row>
-                                                    <Button variant="secondary"
-                                                        size="sm"
-                                                        className="fs-6"
-                                                        onClick={() => delComment(el._id)}
-                                                    >Удалить комментарий</Button></Row>
-                                            </Col>
-                                        </Row>
-                                    }
+                                    <Row>
+                                        <Col md={1}>
+                                            {el.author._id === userId &&
+
+                                                <Button variant="outline-light" className="text-dark border-0 fs-6 w-100 h-100 pt-0"
+                                                    size="sm"
+                                                    onClick={() => delComment(el._id)}
+                                                    title="Удалить комментарий"
+                                                ><Trash3 />
+                                                </Button>
+                                            }
+                                        </Col>
+                                        <Col md={11}>
+                                            {el.text}
+                                        </Col>
+                                    </Row>
                                     <hr className="ms-3" />
                                 </Row>
                             )

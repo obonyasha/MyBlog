@@ -3,10 +3,12 @@ import Item from "./Item";
 import "./style.css";
 
 const Pagination = ({ hk }) => {
-
+   
     let items = [];
     for (let i = 0; i < hk.max; i++) {
-        window.scrollTo(0, 0);
+    
+            window.scrollTo(0, 0);
+
         items.push(<Item
             val={i + 1}
             onClick={() => hk.step(i + 1)}

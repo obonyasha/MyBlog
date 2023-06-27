@@ -6,7 +6,6 @@ import "./style.css";
 import { Heart, HeartFill, ChatLeftText, Postcard, TextIndentLeft } from "react-bootstrap-icons";
 
 import updLike from "../../utils/updLike";
-import searchByText from "../../utils/searchByText";
 import Ctx from "../../context"
 
 const Cardpost = ({ img,

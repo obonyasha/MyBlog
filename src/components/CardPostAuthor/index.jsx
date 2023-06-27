@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Card, Row, Col } from "react-bootstrap";
+import { Button, Card, Row, Col, ButtonGroup } from "react-bootstrap";
 import { Heart, HeartFill, ChatLeftText, TextIndentLeft, PencilSquare, Trash3 } from "react-bootstrap-icons";
 
 import updLike from "../../utils/updLike";
@@ -24,10 +24,23 @@ const CardPostAuthor = ({ img,
         setServerPost,
         token,
         groupId,
-        setModalEditPost } = useContext(Ctx);
+        setModalEditPost,
+        serverPost,
+        setSearchPosts,
+        setQuantity
+    } = useContext(Ctx);
     const [isLike, setIsLike] = useState(likes.includes(userId));
     const datePublic = new Date(created_at).toLocaleDateString();
     const navigate = useNavigate();
+
+    const serchByTeg = (e, tag) => {
+        e.stopPropagation();
+        e.preventDefault();
+        let result = serverPost.filter(el => el.tags.join().toLowerCase().includes(tag.toLowerCase()));
+        setSearchPosts(result);
+        setQuantity(result.length);
+        navigate("/")
+    }
 
     return (
         <Link to={`/post/${_id}`}>
@@ -36,22 +49,26 @@ const CardPostAuthor = ({ img,
                 <Card.Body>
                     <p className="text-black-50 mb-0 ps-1">{datePublic}</p>
                     <p className="mb-1 fw-bolder ps-1">{title}</p>
-                    <Card.Text className="text-truncate">
-                        <Row>
-                            {/* <Col md={10}> */}
-                            <em className="ps-1 ms-2">{text}</em>
-                            {/* <Button variant="outline-light" className="text-dark border-0"><em className="ps-1 "><TextIndentLeft /></em></Button> */}
-
-                            {/* </Col> */}
+                    <Card.Text>
+                        <Row className="mw-100">
+                            <em className="ms-3 p-0 text-truncate">{text}</em>
                         </Row>
                     </Card.Text>
-                    {/* <Row>
-            {tags.map((el, i) => 
-              <Col md>
-              <Button key={i} variant="outline-secondary" className="fs-6" size="sm">{el}</Button>
-              </Col>
-            )}
-          </Row> */}
+                    <Card.Body className="card__footer">
+                        <Row className="card__footer_tags">
+                            <ButtonGroup aria-label="Basic example" size="sm" className="card__block_button">
+                                {tags.map((el, i) =>
+                                    // <Col md={4}>
+                                    <Button key={i} variant="light" className="border-0 text-left" size="sm"
+                                        onClick={(e) => serchByTeg(e, el)}
+                                    >
+                                        <span className="fs-6 text-dark rounded-1 p-1">{el}</span>
+                                    </Button>
+                                    // </Col>
+                                )}
+                            </ButtonGroup>
+                        </Row>
+                    </Card.Body>
                 </Card.Body>
                 <Card.Body className="card__footer">
                     <Row className="card__footer_row">

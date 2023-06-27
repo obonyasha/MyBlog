@@ -16,7 +16,7 @@ const PostsAuthor = () => {
         <Container className="p-4">
             <Row>
                 <Col md={4}>
-                    <Row className="card__header">
+                    <Row className="card__header mb-3">
                         <Col md={1}>
                             <Image src={authorPost.avatar} height="75" rounded />
                         </Col>

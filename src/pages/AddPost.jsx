@@ -153,7 +153,7 @@ const AddPost = () => {
                             />
                             {tags.length > 0 && <Form.Text>
                                 {tags.map(t => <span
-                                    className={`d-inline-block lh-1 bg-success text-light p-2 mt-2 me-2 rounded-1 `}
+                                    className="d-inline-block lh-1 bg-success text-light p-2 mt-2 me-2 rounded-1"
                                     key={t}
                                     onClick={() => delTag(t)}
                                     style={{
