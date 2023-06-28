@@ -10,7 +10,7 @@ const PostsAuthor = () => {
     const location = useLocation();
     useEffect(() => {
         window.scrollTo(0, 0);
-      }, [location]);
+    }, [location]);
 
     return (
         <Container className="p-4">

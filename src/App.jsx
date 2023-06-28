@@ -6,7 +6,7 @@ import Api from "./api";
 import { Header } from "./components/General";
 import ModalAuth from "./components/Modal";
 
-import Main from "./pages/Main";
+
 import Line from "./pages/Line";
 import Post from "./pages/Post";
 import Profile from "./pages/Profile";
@@ -49,10 +49,17 @@ const App = () => {
     }, [user])
 
     useEffect(() => {
-        api.getProfile(userId)
-            .then(data => {
-                setProfile(data)
+        if (token) {
+            fetch(`https://api.react-learning.ru/users/${userId}`, {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             })
+                .then(res => res.json())
+                .then(data => {
+                    setProfile(data)
+                })
+        }
     }, [token])
 
     useEffect(() => {
@@ -71,7 +78,7 @@ const App = () => {
                     setServerPost(data)
                 })
         }
-    }, [token, groupId])
+    }, [token])
 
     useEffect(() => {
         setPosts(serverPost)
@@ -115,7 +122,7 @@ const App = () => {
             setText,
             quantity,
             setQuantity,
-            searchPosts, 
+            searchPosts,
             setSearchPosts
         }}>
             <Header />

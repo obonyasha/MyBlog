@@ -26,7 +26,6 @@ const Post = () => {
     const [isLike, setIsLike] = useState(false);
     const { id } = useParams();
     const navigate = useNavigate();
-    // const datePublic = new Date(post.created_at).toLocaleDateString();
 
 
     useEffect(() => {
@@ -37,10 +36,8 @@ const Post = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data, data.err);
                 setPost(data);
                 setIsLike(data.likes.includes(userId));
-                // setAuthor(data.author._id);
                 return data
             })
     }, [token]);
@@ -120,7 +117,7 @@ const Post = () => {
                                 <Image src={post.author.avatar} height="75" rounded />
                             </Col>
                             <Col md={5}>
-                                <p className="fw-bold fs-6 p-0 mb-1">{post.author.name}</p>                            
+                                <p className="fw-bold fs-6 p-0 mb-1">{post.author.name}</p>
                                 <em className="fs-6 p-0 m-0">{post.author.about}</em>
                             </Col>
                         </Row>
@@ -154,14 +151,14 @@ const Post = () => {
                                     <Row className="mb-3">
                                         <Col md={6}>
                                             <Row><Button variant="outline-secondary"
-                                                onClick={() => updPost(setModalEditPost)}
+                                                onClick={(e) => updPost(e,setModalEditPost)}
                                             >Изменить пост</Button></Row>
                                         </Col>
                                     </Row>
                                     <Row>
                                         <Col md={6}>
                                             <Row><Button variant="outline-danger"
-                                                onClick={() => delPost(groupId, id, token, setServerPost, navigate)}
+                                                onClick={(e) => delPost(e,groupId, id, token, setServerPost, navigate)}
                                             >Удалить пост</Button></Row>
                                         </Col>
                                     </Row>
@@ -174,9 +171,17 @@ const Post = () => {
                             {post.title}
                         </h3>
                     </Row>
-                    <Row className="mb-3" >
+                    <Row className="mb-3">
                         <div className="mw-100 mh-100 bloge__text_img" dangerouslySetInnerHTML={{ __html: post.text }}></div>
                         {/* <p className="lh-base">{post.text}</p> */}
+                    </Row>
+                    <Row className="mb-3 w-50 d-flex">  
+                        {post.tags.map((el, i) =>
+                            <Col md={2} key={i}
+                            >
+                                <span className="fs-6 text-dark rounded-1 p-1 bg-light">{el}</span>
+                            </Col>
+                        )}
                     </Row>
                     <Row className="mb-3 bg-light rounded-2 w-75">
                         <Row className="mb-3">
@@ -247,9 +252,9 @@ const Post = () => {
                     imagePost={post.image}
                     textPost={post.text}
                     tagsPost={post.tags}
-                    id={id} />
+                    id={id} 
+                    setPost={setPost}/>
             }
-
         </Container>
     )
 }

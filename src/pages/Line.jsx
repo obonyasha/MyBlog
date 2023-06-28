@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Col, Container, Row, Dropdown, ButtonGroup, Button } from "react-bootstrap";
 import { FilterCircle } from "react-bootstrap-icons";
 
@@ -11,16 +12,19 @@ import Ctx from "../context";
 
 
 const Line = () => {
-    const { posts, user, searchPosts, quantity, text, setPosts, serverPost } = useContext(Ctx);
+    const { posts, user, searchPosts, quantity, text } = useContext(Ctx);
     const paginate = usePagination(searchPosts.length > 0 ? searchPosts : posts, 20);
     const [sort, setSort] = useState(null)
 
-
+    // const location = useLocation();
+    // useEffect(() => {
+    //     window.scrollTo(0, 0);
+    // }, [location]);
 
     useEffect(() => {
+        // window.scrollTo(0, 0);
         paginate.step(1);
     }, [posts])
-
 
     const clearSort = () => {
         setSort(null);
@@ -134,10 +138,12 @@ const Line = () => {
                     <Row className="mb-4">
                         <Pagination hk={paginate} />
                     </Row>
+                    <Button className="sticky-md-bottom" variant="secondary"onClick={() => window.scrollTo(0, 0)}>
+                        В начало
+                    </Button>
                 </>
             }
         </Container>
     )
 }
-
 export default Line;

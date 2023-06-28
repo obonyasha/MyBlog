@@ -14,7 +14,7 @@ const Search = ({ arr, upd }) => {
     return (
         <Row>
             <InputGroup>
-                <Form.Control
+                <Form.Control className="focus-ring focus-ring-secondary"
                     type="text"
                     id="text"
                     value={text}

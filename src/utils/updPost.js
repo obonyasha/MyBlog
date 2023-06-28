@@ -1,4 +1,6 @@
-const updPost = (setModalEditPost) => {
+const updPost = (e, setModalEditPost) => {
+    // e.stopPropagation();
+    // e.preventDefault();
     setModalEditPost(true)
 }
 

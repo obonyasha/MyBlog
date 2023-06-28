@@ -1,4 +1,6 @@
-const delPost = (groupId, id, token, setServerPost, navigate) => {
+const delPost = (e, groupId, id, token, setServerPost, navigate) => {
+    e.stopPropagation();
+    e.preventDefault();
     fetch(`https://api.react-learning.ru/v2/${groupId}/posts/${id}`, {
         method: "DELETE",
         headers: {

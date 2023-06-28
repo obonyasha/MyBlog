@@ -19,7 +19,8 @@ const func = (e, state, setIsLike, setServerPost, token, _id, groupId) => {
                     }
                 });
                 return arr;
-            })
-        })
+            });
+        });
+    window.scrollTo(0, document.documentElement.scrollTop);
 }
 export default func;

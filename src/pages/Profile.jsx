@@ -12,12 +12,14 @@ const Profile = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [location]);
+    
     const {
         serverPost,
         setUser,
         user,
         setModalEditProfile,
-        profile } = useContext(Ctx);
+        profile
+    } = useContext(Ctx);
 
     const logOut = (e) => {
         e.preventDefault();

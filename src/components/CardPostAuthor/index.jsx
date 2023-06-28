@@ -97,7 +97,7 @@ const CardPostAuthor = ({ img,
                             {author._id === userId &&
                                 <Button
                                     variant="outline-light" className="text-dark border-0 transition"
-                                    onClick={() => updPost(setModalEditPost)}
+                                    onClick={(e) => updPost(e, setModalEditPost)}
                                     title="Редактировать пост">
                                     <PencilSquare />
                                 </Button>
@@ -107,7 +107,7 @@ const CardPostAuthor = ({ img,
                             {author._id === userId &&
                                 <Button
                                     variant="outline-light" className="text-dark border-0 transition_red"
-                                    onClick={() => delPost(groupId, _id, token, setServerPost, navigate)}
+                                    onClick={(e) => delPost(e, groupId, _id, token, setServerPost, navigate)}
                                     title="Удалить пост">
                                     <Trash3 />
                                 </Button>

@@ -5,7 +5,7 @@ import { Container, Form, Row, Col, Button, Modal } from "react-bootstrap";
 
 import Ctx from "../../context";
 
-const ModalEditPost = ({ titlePost, imagePost, textPost, tagsPost, id }) => {
+const ModalEditPost = ({ titlePost, imagePost, textPost, tagsPost, id, setPost }) => {
     const { groupId, token, setServerPost, modalEditPost, setModalEditPost } = useContext(Ctx);
     const navigate = useNavigate();
     const [title, setTitle] = useState(titlePost);
@@ -49,7 +49,8 @@ const ModalEditPost = ({ titlePost, imagePost, textPost, tagsPost, id }) => {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-                setServerPost(prev => [data, ...prev]);
+                // setServerPost(prev => [data, ...prev]);
+                setPost(data);
                 setModalEditPost(false)
                 navigate(`/post/${data._id}`)
             })
@@ -148,11 +149,8 @@ const ModalEditPost = ({ titlePost, imagePost, textPost, tagsPost, id }) => {
                                                 onChange={(e) => setImage(e.target.value)}
                                             />
                                         </Form.Group>
-
                                     </Col>
                                 </Row>
-
-
                             </Form>
                         </Col>
                     </Row>

@@ -41,7 +41,7 @@ const ModalEditProfile = () => {
                 <Modal.Body>
                     <Form
                         onSubmit={sendForm}>
-                        <div className="mb-3" style={{
+                        <div className="mb-3 border rounded -1" style={{
                             backgroundImage: `url(${img})`,
                             backgroundSize: "cover",
                             height: "16.05rem",

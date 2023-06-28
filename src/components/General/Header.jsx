@@ -42,14 +42,14 @@ const Header = () => {
                             <Link to="/" className="text-dark">Лента</Link>
                         </Button>
                     </div>
-                    <div className="p-2  ms-auto">
-                        <Search
-                            arr={serverPost}
-                            upd={setPosts}
-                        />
-                    </div>
                     {user &&
                         <>
+                            <div className="p-2  ms-auto">
+                                <Search
+                                    arr={serverPost}
+                                    upd={setPosts}
+                                />
+                            </div>
                             <div className="p-2">
                                 <Link to="/addpost" title="Создать пост">
                                     <PlusCircle className="h-100 w-100 text-dark fs-1" />

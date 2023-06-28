@@ -27,7 +27,7 @@ const Cardpost = ({ img,
     setAuthorPost,
     setQuantity,
     serverPost,
-    setSearchPosts} = useContext(Ctx);
+    setSearchPosts } = useContext(Ctx);
 
   const [isLike, setIsLike] = useState(likes.includes(userId));
   const datePublic = new Date(created_at).toLocaleDateString();
@@ -82,13 +82,11 @@ const Cardpost = ({ img,
           <Row className="card__footer_tags">
             <ButtonGroup aria-label="Basic example" size="sm" className="card__block_button">
               {tags.map((el, i) =>
-                // <Col md={4}>
                 <Button key={i} variant="light" className="border-0 text-left" size="sm"
                   onClick={(e) => serchByTeg(e, el)}
                 >
                   <span className="fs-6 text-dark rounded-1 p-1">{el}</span>
                 </Button>
-                // </Col>
               )}
             </ButtonGroup>
           </Row>

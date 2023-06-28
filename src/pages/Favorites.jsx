@@ -1,10 +1,15 @@
-import { useContext } from "react"
-import { Container, Row, Col } from "react-bootstrap"
-import Cardpost from "../components/Cardpost"
-import Ctx from "../context"
+import { useContext, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { Container, Row, Col } from "react-bootstrap";
+import Cardpost from "../components/Cardpost";
+import Ctx from "../context";
 
 const Favorites = () => {
     const { serverPost, userId } = useContext(Ctx);
+    const location = useLocation();
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location]);
 
     return (
         <Container className="vh-100">
